@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf64a018b0aea449b4bf81021be8998, type: 3}
+  m_Name: BaseSettings
+  m_EditorClassIdentifier: 
+  force: 1.75
+  rotationSmooth: 1.5
+  forwardRotation: {x: 0, y: 0, z: 0.3007058, w: 0.95371693}
+  downRotation: {x: 0, y: 0, z: -0.70710677, w: 0.70710677}
+  clockRotation: 1
