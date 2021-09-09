@@ -6,8 +6,8 @@ public class WindowGameOver : Window
 {
     public UnityAction onOk;
 
-    [SerializeField] private WindowScore windowScore;
-    public WindowScore WindowScore => windowScore;
+    [SerializeField] private TMPro.TextMeshProUGUI score;
+    [SerializeField] private TMPro.TextMeshProUGUI scoreBest;
 
     [SerializeField] private Button ok;
 
@@ -15,6 +15,17 @@ public class WindowGameOver : Window
     {
         ok.onClick.AddListener(Ok);
     }
+
+
+    public void SetScore(string value)
+    {
+        score.text = value;
+    }
+    public void SetBestScore(string value)
+    {
+        scoreBest.text = value;
+    }
+
     private void Ok()
     {
         onOk?.Invoke();

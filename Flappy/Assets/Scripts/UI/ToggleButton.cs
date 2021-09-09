@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ToggleButton : MonoBehaviour
 {
     [SerializeField] private Toggle toggle;
     [SerializeField] private Image icon;
-
+    [Space]
     [SerializeField] private bool isInverse = false;
-
-    public ColorBlock selected;
+    [SerializeField] private ColorBlock selected;
 
     private ColorBlock normal;
 

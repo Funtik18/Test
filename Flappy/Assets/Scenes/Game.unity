@@ -215,6 +215,7 @@ RectTransform:
   - {fileID: 1235852367}
   - {fileID: 1296541265}
   - {fileID: 1960477878}
+  - {fileID: 89740322}
   - {fileID: 1023949372}
   - {fileID: 148590631}
   m_Father: {fileID: 0}
@@ -239,8 +240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowStart: {fileID: 1296541267}
   windowGame: {fileID: 1960477881}
+  windowPause: {fileID: 89740325}
   windowGameOver: {fileID: 1023949369}
-  sceneTransition: {fileID: 148590634}
+  fader: {fileID: 148590635}
 --- !u!1 &89740321
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,8 +280,8 @@ RectTransform:
   - {fileID: 1603249951}
   - {fileID: 1564735054}
   - {fileID: 2073027105}
-  m_Father: {fileID: 1960477878}
-  m_RootOrder: 2
+  m_Father: {fileID: 33947459}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -581,7 +583,6 @@ GameObject:
   - component: {fileID: 148590633}
   - component: {fileID: 148590632}
   - component: {fileID: 148590635}
-  - component: {fileID: 148590634}
   m_Layer: 5
   m_Name: BlackBlank
   m_TagString: Untagged
@@ -601,7 +602,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 33947459}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -645,21 +646,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148590630}
   m_CullTransparentMesh: 0
---- !u!114 &148590634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148590630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a2b7324d6750e41bb94582b851d072, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 148590635}
-  fadeOutTime: 0.5
-  fadeInTime: 0.25
 --- !u!225 &148590635
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -854,8 +840,6 @@ GameObject:
   - component: {fileID: 364603635}
   - component: {fileID: 364603639}
   - component: {fileID: 364603638}
-  - component: {fileID: 364603637}
-  - component: {fileID: 364603636}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -884,33 +868,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &364603636
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 364603634}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &364603637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 364603634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 343e3153d2adbf049893118be5de38b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 364603636}
-  score: {fileID: 1729415685}
-  scoreBest: {fileID: 101633201}
 --- !u!114 &364603638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,11 +1431,12 @@ MonoBehaviour:
   playerPrefab: {fileID: 6459145828074475367, guid: b4e70001a44a9f24d86a10d1fc0c1a57,
     type: 3}
   settings: {fileID: 11400000, guid: 105ac399dec18464092c8014c4194445, type: 2}
-  uiManager: {fileID: 33947460}
   spawnerPrefab: {fileID: 9005124615621714838, guid: ac299e57db643664ba9bd13fb3b78764,
     type: 3}
   obstaclePrefab: {fileID: 3972824978391782745, guid: fa9eef722cf18ea49acaef25f5ba9ab2,
     type: 3}
+  initialSize: 3
+  uiManager: {fileID: 33947460}
 --- !u!114 &942310830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1751,7 +1709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1023949370}
-  windowScore: {fileID: 364603637}
+  score: {fileID: 1729415685}
+  scoreBest: {fileID: 101633201}
   ok: {fileID: 2067459149}
 --- !u!225 &1023949370
 CanvasGroup:
@@ -1788,7 +1747,7 @@ RectTransform:
   - {fileID: 364603635}
   - {fileID: 2067459148}
   m_Father: {fileID: 33947459}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2961,7 +2920,6 @@ RectTransform:
   m_Children:
   - {fileID: 1007660001}
   - {fileID: 844113866}
-  - {fileID: 89740322}
   m_Father: {fileID: 33947459}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3005,7 +2963,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 1960477880}
   score: {fileID: 844113867}
   pause: {fileID: 1007660002}
-  windowPause: {fileID: 89740325}
 --- !u!1 &2067459147
 GameObject:
   m_ObjectHideFlags: 0

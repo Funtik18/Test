@@ -8,9 +8,6 @@ public class WindowGame : Window
 
     [SerializeField] private TMPro.TextMeshProUGUI score;
     [SerializeField] private Button pause;
-    [SerializeField] private WindowPause windowPause;
-
-    public WindowPause WindowPause => windowPause;
 
     private void Awake()
     {

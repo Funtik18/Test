@@ -2,6 +2,8 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+using Zenject;
+
 public class WindowPause : Window
 {
     public UnityAction<bool> onMusicChanged;
@@ -28,13 +30,12 @@ public class WindowPause : Window
         buttonMenu.onClick.AddListener(Menu);
     }
 
-    public void Init(bool music, bool sound, bool vibration)
+    public void Initialize(bool music, bool sound, bool vibration)
     {
         toggleMusic.isOn = music;
         toggleSound.isOn = sound;
         toggleVibration.isOn = vibration;
     }
-
 
     private void MusicChanged(bool trigger)
     {

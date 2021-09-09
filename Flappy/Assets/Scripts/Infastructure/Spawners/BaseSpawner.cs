@@ -12,21 +12,23 @@ public class BaseSpawner : MonoBehaviour, ISpawner
     [SerializeField] private float heightMin, heightMax;
     [SerializeField] private float timeBtw = 2f;
 
-    private BaseObstacle obstaclePrefab;
+
+    private bool isPaused = false;
 
     private Coroutine spawnCoroutine = null;
     public bool IsSpawnProccess => spawnCoroutine != null;
 
-    private List<BaseObstacle> obstacles = new List<BaseObstacle>();
-
     private WaitForSeconds seconds;
 
-    private bool isPaused = false;
+
+    private List<IObstacle> obstacles = new List<IObstacle>();
+
+    private BaseObstacle.ZenjectFactory factory;
 
     [Inject]
-    public void Construct(BaseObstacle obstacle)
+    public void Construct(BaseObstacle.ZenjectFactory factory)
     {
-        obstaclePrefab = obstacle;
+        this.factory = factory;
     }
 
     public void StartSpawn()
@@ -37,34 +39,15 @@ public class BaseSpawner : MonoBehaviour, ISpawner
             spawnCoroutine = StartCoroutine(Spawner());
         }
     }
-
-    public void Pause()
-    {
-        isPaused = true;
-
-        for (int i = 0; i < obstacles.Count; i++)
-        {
-            obstacles[i].Pause();
-        }
-    }
-    public void Continue()
-    {
-        isPaused = false;
-
-        for (int i = 0; i < obstacles.Count; i++)
-        {
-            obstacles[i].Continue();
-        }
-    }
     private IEnumerator Spawner()
     {
         while (true)
         {
-            while (isPaused)//error
+            while (isPaused)
             {
                 yield return null;
 
-                if(isPaused == false)
+                if (isPaused == false)
                 {
                     yield return seconds;
                 }
@@ -72,50 +55,65 @@ public class BaseSpawner : MonoBehaviour, ISpawner
 
             Vector2 pos = spawnPosition + new Vector2(0, Random.Range(heightMin, heightMax));
 
-            GameObject obj = ObjectPool.GetObject(obstaclePrefab.gameObject);
-            obj.transform.position = pos;
-            obj.transform.rotation = Quaternion.identity;
-
-            BaseObstacle obstacle = obj.GetComponent<BaseObstacle>();
+            IObstacle obstacle = factory.Create(pos, destructPosition);
+            obstacle.onDespawned += RemoveObstacle;
             obstacles.Add(obstacle);
             obstacle.StartMove();
 
-            CheckObstacles();
-
             yield return seconds;
         }
+    }
+    public void Pause()
+    {
+        PauseSpawner(true);
+    }
+    public void Continue()
+    {
+
+        PauseSpawner(false);
     }
     public void StopSpawn()
     {
         if (IsSpawnProccess)
         {
             StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
 
+            PauseSpawner(true);
+
+            obstacles.Clear();
+        }
+    }
+
+    private void RemoveObstacle(IObstacle obstacle)
+    {
+        if (obstacles.Contains(obstacle))
+        {
+            obstacles.Remove(obstacle);
+
+            obstacle.onDespawned -= RemoveObstacle;
+        }
+    }
+
+    private void PauseSpawner(bool trigger)
+    {
+        isPaused = trigger;
+
+        if (trigger)
+        {
             for (int i = 0; i < obstacles.Count; i++)
             {
-                obstacles[i].StopMove();
+                obstacles[i].Pause();
             }
-            //need clear
         }
-    }
-
-    private void CheckObstacles()
-    {
-        for (int i = 0; i < obstacles.Count; i++)
+        else
         {
-            if (obstacles[i].transform.position.x <= destructPosition.x)
+            for (int i = 0; i < obstacles.Count; i++)
             {
-                obstacles[i].StopMove();
-                ObjectPool.ReturnGameObject(obstacles[i].gameObject);
-
-                if (obstacles.Contains(obstacles[i]))
-                {
-                    obstacles.Remove(obstacles[i]);
-                }
+                obstacles[i].Continue();
             }
         }
     }
-
 
     private void OnDrawGizmos()
     {
